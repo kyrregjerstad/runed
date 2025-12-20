@@ -1,8 +1,9 @@
-import type { ConfigurableWindow } from "$lib/internal/configurable-globals.js";
+import { type ConfigurableWindow } from "$lib/internal/configurable-globals.js";
 import type { MaybeElementGetter } from "$lib/internal/types.js";
 import {
 	useIntersectionObserver,
 	type UseIntersectionObserverOptions,
+	type UseIntersectionObserverReturn,
 } from "../use-intersection-observer/use-intersection-observer.svelte.js";
 
 export type IsInViewportOptions = ConfigurableWindow & UseIntersectionObserverOptions;
@@ -14,9 +15,10 @@ export type IsInViewportOptions = ConfigurableWindow & UseIntersectionObserverOp
  */
 export class IsInViewport {
 	#isInViewport = $state(false);
+	#observer: UseIntersectionObserverReturn;
 
 	constructor(node: MaybeElementGetter, options?: IsInViewportOptions) {
-		useIntersectionObserver(
+		this.#observer = useIntersectionObserver(
 			node,
 			(intersectionObserverEntries) => {
 				let isIntersecting = this.#isInViewport;
@@ -32,8 +34,13 @@ export class IsInViewport {
 			options
 		);
 	}
-
+	/** Current viewport intersection state */
 	get current() {
 		return this.#isInViewport;
+	}
+
+	/** The underlying intersection observer */
+	get observer() {
+		return this.#observer;
 	}
 }
