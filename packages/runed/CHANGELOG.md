@@ -1,5 +1,16 @@
 # runed
 
+## 0.37.1
+
+### Patch Changes
+
+- fix(resource): set initial loading state from options fields
+  ([#341](https://github.com/svecosystem/runed/pull/341))
+
+- Refactor `IsInViewport` to expose the underlying observer directly via an `observer` property
+  ([#202](https://github.com/svecosystem/runed/pull/202)) Added a `once` option to
+  `useIntersectionObserver` to automatically stop observing after the first intersection.
+
 ## 0.37.0
 
 ### Minor Changes
